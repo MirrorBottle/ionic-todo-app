@@ -1,18 +1,27 @@
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <ion-page>
+      <Header />
+      <ion-router-outlet />
+      <Navs />
+    </ion-page>
   </ion-app>
 </template>
 
-<script lang="ts">
-import { IonApp, IonRouterOutlet } from '@ionic/vue';
+<script>
+import { IonApp, IonRouterOutlet, IonPage } from '@ionic/vue';
+import Header from '@/components/Header';
+import Navs from '@/components/Navs';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     IonApp,
-    IonRouterOutlet
+    IonRouterOutlet,
+    IonPage,
+    Header,
+    Navs
   }
 });
 </script>

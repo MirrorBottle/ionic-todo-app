@@ -1,7 +1,9 @@
 <template>
   <ion-page>
     <div class="deadline-container">
-      <p>Deadline : {{todo.deadline}}</p>
+      <ion-chip>
+        <ion-label color="danger">Deadline : {{todo.deadline}}</ion-label>
+      </ion-chip>
     </div>
     <ion-card>
       <ion-card-header>
@@ -12,9 +14,12 @@
         <p>{{todo.description}}</p>
         <template v-if="todo.form_link">
           <div class="form-link-container">
-            <a href="{{todo.form_link}}" target="_system" rel="noopener noreferrer" >
+            <a :href="todo.form_link" target="_system" rel="noopener noreferrer" >
               {{todo.form_link}}
             </a>
+            <ion-button @click="handleCopyClick" size="small">
+              Copy
+            </ion-button>
           </div>
         </template>
       </ion-card-content>
@@ -28,9 +33,11 @@
 </template>
 
 <script>
+import { copyText } from 'vue3-clipboard'
 import { 
   IonPage, 
   IonLoading,
+  IonButton
 } from '@ionic/vue';
 import TodoResource from '@/api/todo';
 
@@ -40,6 +47,7 @@ export default {
   components: {
     IonPage, 
     IonLoading,
+    IonButton,
   },
   data() {
     return {
@@ -52,6 +60,17 @@ export default {
     const { data } = await todoResource.get(id);
     this.todo = data;
     this.isLoading = false;
+  },
+  methods: {
+    handleCopyClick() {
+      copyText(this.todo.form_link, undefined, (error) => {
+        if (error) {
+          alert('Can not copy')
+        } else {
+          alert('Copied')
+        }
+      })
+    }
   }
 }
 </script>
@@ -67,7 +86,7 @@ export default {
   padding-right: 1rem;
 }
 .deadline-container {
-  margin: 10px;
+  margin: 20px 10px 5px 10px;
   p {
     font-weight: bold;
     color: #FF0000;
@@ -75,5 +94,11 @@ export default {
 }
 .form-link-container {
   margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  word-break: break-all;
 }
 </style>

@@ -10,6 +10,11 @@
       <ion-label>Notes</ion-label>
     </ion-tab-button>
 
+    <ion-tab-button tab="archive" href="/tabs/archive">
+      <ion-icon :icon="folderOpenOutline"></ion-icon>
+      <ion-label>Archive</ion-label>
+    </ion-tab-button>
+
     <ion-tab-button tab="add" href="/tabs/add">
       <ion-icon :icon="addOutline"></ion-icon>
       <ion-label>Tambah</ion-label>
@@ -24,13 +29,13 @@ import {
   IonTabBar, 
   IonTabButton
 } from '@ionic/vue';
-import { bookmarkOutline, addOutline, listOutline } from 'ionicons/icons';
+import { bookmarkOutline, addOutline, listOutline, folderOpenOutline } from 'ionicons/icons';
 
 export default {
   components: { IonIcon, IonLabel, IonTabBar, IonTabButton },
   data() {
     return {
-      bookmarkOutline, addOutline, listOutline
+      bookmarkOutline, addOutline, listOutline, folderOpenOutline
     }
   }
 };

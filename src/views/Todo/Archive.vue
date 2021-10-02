@@ -20,7 +20,7 @@
             </ion-note>
           </ion-item>
           <ion-item-options side="end">
-            <ion-item-option color="primary" @click="handleArchiveClick(todo)">
+            <ion-item-option color="success" @click="handleUnarchiveClick(todo)">
               <ion-icon slot="icon-only" :icon="folderOutline"></ion-icon>
             </ion-item-option>
             <ion-item-option color="danger" @click="handleDeleteClick(todo)">
@@ -32,8 +32,8 @@
     </template>
     <template v-else>
       <div class="empty-state">
-        <ion-icon size="large" :icon="happyOutline"></ion-icon>
-        <h2>Cie... gak ada tugas nih</h2>
+        <ion-icon size="large" :icon="sadOutline"></ion-icon>
+        <h2>Kok gak ada tugas selesai?</h2>
       </div>
     </template>
     
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { folderOutline, trashBinOutline, refreshOutline, happyOutline } from 'ionicons/icons';
+import { pencilOutline, trashBinOutline, refreshOutline, sadOutline, folderOutline } from 'ionicons/icons';
 import { 
   IonPage, 
   IonLoading, 
@@ -78,20 +78,20 @@ export default {
   },
   data() {
     return {
-      folderOutline, trashBinOutline, refreshOutline, happyOutline,
+      pencilOutline, trashBinOutline, refreshOutline, sadOutline, folderOutline,
       todos: [],
       isLoading: true,
     }
   },
   async created() {
-    const { data } = await todoResource.list();
+    const { data } = await todoResource.list({ is_archive: true });
     this.todos = data;
     this.isLoading = false;
   },
   methods: {
     async doRefresh() {
       this.isLoading = true;
-      const { data } = await todoResource.list();
+      const { data } = await todoResource.list({ is_archive: true });
       this.todos = data;
       this.isLoading = false;
     },
@@ -104,10 +104,10 @@ export default {
         .destroy(todo.id)
         .finally(() => this.doRefresh())
     },
-    handleArchiveClick(todo) {
+    handleUnarchiveClick(todo) {
       this.isLoading = true;
       todoResource
-        .update(todo.id, { is_archive: 1 })
+        .update(todo.id, { is_archive: 0 })
         .finally(() => this.doRefresh())
     }
   }

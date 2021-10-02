@@ -4,6 +4,7 @@ import Add from '@/views/Add';
 
 // TODO
 import TodoIndex from '@/views/Todo/Index';
+import TodoArchive from '@/views/Todo/Archive';
 import TodoDetail from '@/views/Todo/Detail';
 // NOTE
 import NoteIndex from '@/views/Note/Index';
@@ -21,6 +22,11 @@ const routes = [
     path: '/tabs/todo',
     name: 'To Do',
     component: TodoIndex
+  },
+  {
+    path: '/tabs/archive',
+    name: 'Archive',
+    component: TodoArchive
   },
   {
     path: '/tabs/add',

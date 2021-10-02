@@ -1,29 +1,118 @@
 <template>
-  <ion-list>
-    <ion-item>
-      <ion-label>Pokémon Yellow</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Mega Man X</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>The Legend of Zelda</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Pac-Man</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Super Mario World</ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-page>
+    <div class="reload-container">
+      <ion-button @click="doRefresh" size="small">
+        <ion-icon :icon="refreshOutline"></ion-icon>
+        Reload
+      </ion-button>
+    </div>
+    <ion-list>
+      <ion-item-sliding v-for="todo in todos" :key="todo.id">
+        <ion-item button @click="handleItemClick(todo)">
+          <ion-label>
+            <h2>{{todo.title}}</h2>
+            <p>{{todo.lesson_format}}</p>
+            <p>{{todo.description}}</p>
+          </ion-label>
+          <ion-note slot="end">
+            {{todo.deadline}}
+          </ion-note>
+        </ion-item>
+        <ion-item-options side="end">
+          <!-- <ion-item-option color="warning" @click="unread(item)">
+            <ion-icon slot="icon-only" :icon="pencilOutline"></ion-icon>
+          </ion-item-option> -->
+          <ion-item-option color="danger" @click="handleDeleteClick(todo)">
+            <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    
+    <ion-loading
+      :is-open="isLoading"
+      message="Please wait..."
+    />
+  </ion-page>
 </template>
 
 <script>
+import { pencilOutline, trashBinOutline, refreshOutline } from 'ionicons/icons';
+import { 
+  IonPage, 
+  IonLoading, 
+  IonList,
+  IonItem,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
+  IonNote,
+  IonLabel,
+  IonButton,
+} from '@ionic/vue';
+
+import TodoResource from '@/api/todo';
+
+const todoResource  = new TodoResource();
 export default {
-  name: 'TodoIndex'
+  name: 'TodoIndex',
+  components: {
+    IonPage, 
+    IonLoading, 
+    IonList,
+    IonItem,
+    IonItemSliding,
+    IonItemOptions,
+    IonItemOption,
+    IonNote,
+    IonLabel,
+    IonButton,
+  },
+  data() {
+    return {
+      pencilOutline, trashBinOutline, refreshOutline,
+      todos: [],
+      isLoading: true,
+    }
+  },
+  async created() {
+    const { data } = await todoResource.list();
+    this.todos = data;
+    this.isLoading = false;
+  },
+  methods: {
+    async doRefresh() {
+      this.isLoading = true;
+      const { data } = await todoResource.list();
+      this.todos = data;
+      this.isLoading = false;
+    },
+    handleItemClick(todo) {
+      this.$router.push({ name: 'To Do Detail', params: { id: todo.id } })
+    },
+    handleDeleteClick(todo) {
+      this.isLoading = true;
+      todoResource
+        .destroy(todo.id)
+        .then(() => {
+          this.doRefresh();
+        })
+        .catch(() => {
+          this.doRefresh();
+        })
+    }
+  }
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.ion-page {
+  justify-content: flex-start!important;
+}
+.reload-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: right;
+  padding-right: 1rem;
+}
 </style>

@@ -14,14 +14,6 @@
             <p>{{note.description}}</p>
           </ion-label>
         </ion-item>
-        <ion-item-options side="end">
-          <!-- <ion-item-option color="warning" @click="unread(item)">
-            <ion-icon slot="icon-only" :icon="pencilOutline"></ion-icon>
-          </ion-item-option> -->
-          <ion-item-option @click="handleDeleteClick(note)" color="danger">
-            <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
       </ion-item-sliding>
     </ion-list>
     
@@ -41,8 +33,6 @@ import {
   IonList,
   IonItem,
   IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
   IonLabel,
   IonButton,
 } from '@ionic/vue';
@@ -58,8 +48,6 @@ export default {
     IonList,
     IonItem,
     IonItemSliding,
-    IonItemOptions,
-    IonItemOption,
     IonLabel,
     IonButton,
   },

@@ -19,14 +19,6 @@
               {{todo.deadline}}
             </ion-note>
           </ion-item>
-          <ion-item-options side="end">
-            <ion-item-option color="success" @click="handleUnarchiveClick(todo)">
-              <ion-icon slot="icon-only" :icon="folderOutline"></ion-icon>
-            </ion-item-option>
-            <ion-item-option color="danger" @click="handleDeleteClick(todo)">
-              <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
-            </ion-item-option>
-          </ion-item-options>
         </ion-item-sliding>
       </ion-list>
     </template>
@@ -52,8 +44,6 @@ import {
   IonList,
   IonItem,
   IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
   IonNote,
   IonLabel,
   IonButton,
@@ -70,8 +60,6 @@ export default {
     IonList,
     IonItem,
     IonItemSliding,
-    IonItemOptions,
-    IonItemOption,
     IonNote,
     IonLabel,
     IonButton,

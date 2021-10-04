@@ -49,17 +49,18 @@ export default {
     IonLoading,
     IonButton,
   },
+  async ionViewDidEnter() {
+    this.isLoading = true;
+    const id = this.$route.params && this.$route.params.id;
+    const { data } = await todoResource.get(id);
+    this.todo = data;
+    this.isLoading = false;
+  },
   data() {
     return {
       todo: {},
       isLoading: true,
     }
-  },
-  async created() {
-    const id = this.$route.params && this.$route.params.id;
-    const { data } = await todoResource.get(id);
-    this.todo = data;
-    this.isLoading = false;
   },
   methods: {
     handleCopyClick() {

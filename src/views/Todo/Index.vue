@@ -7,28 +7,30 @@
       </ion-button>
     </div>
     <template v-if="todos.length > 0">
-      <ion-list>
-        <ion-item-sliding v-for="todo in todos" :key="todo.id">
-          <ion-item button @click="handleItemClick(todo)">
-            <ion-label>
-              <h2>{{todo.title}}</h2>
-              <p>{{todo.lesson_format}}</p>
-              <p>{{todo.description}}</p>
-            </ion-label>
-            <ion-note slot="end">
-              {{todo.deadline}}
-            </ion-note>
-          </ion-item>
-          <ion-item-options side="end">
-            <ion-item-option color="primary" @click="handleArchiveClick(todo)">
-              <ion-icon slot="icon-only" :icon="folderOutline"></ion-icon>
-            </ion-item-option>
-            <ion-item-option color="danger" @click="handleDeleteClick(todo)">
-              <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
+      <ion-content fullscreen :scroll-events="true">
+        <ion-list>
+          <ion-item-sliding v-for="todo in todos" :key="todo.id">
+            <ion-item button @click="handleItemClick(todo)">
+              <ion-label>
+                <h2>{{todo.title}}</h2>
+                <p>{{todo.lesson_format}}</p>
+                <p>{{todo.description}}</p>
+              </ion-label>
+              <ion-note slot="end">
+                {{todo.deadline}}
+              </ion-note>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="primary" @click="handleArchiveClick(todo)">
+                <ion-icon slot="icon-only" :icon="folderOutline"></ion-icon>
+              </ion-item-option>
+              <ion-item-option color="danger" @click="handleDeleteClick(todo)">
+                <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-content>
     </template>
     <template v-else>
       <div class="empty-state">
@@ -57,6 +59,7 @@ import {
   IonNote,
   IonLabel,
   IonButton,
+  IonContent,
 } from '@ionic/vue';
 
 import TodoResource from '@/api/todo';
@@ -75,6 +78,7 @@ export default {
     IonNote,
     IonLabel,
     IonButton,
+    IonContent,
   },
   data() {
     return {
@@ -115,6 +119,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+ion-content {
+  overflow: hidden;
+}
+ion-list {
+  padding-bottom: 5rem;
+}
 .ion-page {
   justify-content: flex-start!important;
 }
@@ -123,6 +133,7 @@ export default {
   margin-bottom: 1rem;
   text-align: right;
   padding-right: 1rem;
+  z-index: 999;
 }
 .empty-state {
   display: flex;

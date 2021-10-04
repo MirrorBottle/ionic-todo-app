@@ -2,16 +2,14 @@
   <ion-app>
     <ion-page>
       <Header />
-      <ion-content fullscreen>
-        <ion-router-outlet />
-      </ion-content>
+      <ion-router-outlet />
       <Navs />
     </ion-page>
   </ion-app>
 </template>
 
 <script>
-import { IonApp, IonRouterOutlet, IonPage, IonContent } from '@ionic/vue';
+import { IonApp, IonRouterOutlet, IonPage } from '@ionic/vue';
 import Header from '@/components/Header';
 import Navs from '@/components/Navs';
 import { defineComponent } from 'vue';
@@ -22,7 +20,6 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet,
     IonPage,
-    IonContent,
     Header,
     Navs
   }

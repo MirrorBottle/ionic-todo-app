@@ -7,7 +7,9 @@
 </template>
 
 <script>
+import { IonToolbar, IonTitle, IonHeader } from "@ionic/vue";
 export default {
+  components: { IonToolbar, IonTitle, IonHeader },
   name: 'Header'
 }
 </script>

@@ -22,3 +22,12 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss">
+  ion-router-outlet .ion-page {
+    padding-top:3rem;
+  }
+  ion-refresher {
+    padding-top:8rem;
+  }
+</style>

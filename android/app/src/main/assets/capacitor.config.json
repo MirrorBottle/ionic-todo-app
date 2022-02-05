@@ -1,0 +1,6 @@
+{
+	"appId": "todo.bayusetiawan.app",
+	"appName": "todo",
+	"webDir": "public",
+	"bundledWebRuntime": false
+}

@@ -1,0 +1,7 @@
+{
+  "name": "todo-v2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

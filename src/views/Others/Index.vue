@@ -71,6 +71,19 @@
             </ion-item>
           </ion-list>
         </ion-accordion>
+
+        <ion-accordion value="theme">
+          <ion-item slot="header">
+            <ion-label>Ubah Tema</ion-label>
+          </ion-item>
+
+          <ion-list slot="content">
+            <ion-item>
+              <ion-label>Dark Mode</ion-label>
+              <ion-toggle @ionChange="handleThemeToggleChange($event)"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
       </ion-accordion-group>
 
       <ion-button expand="block" color="danger" class="mt2">Logout</ion-button>
@@ -79,7 +92,7 @@
 </template>
 
 <script>
-import { IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText } from '@ionic/vue';
+import { IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle } from '@ionic/vue';
 import { schedules } from '@/utils/data';
 
 import UserResource from '@/api/users';
@@ -87,7 +100,7 @@ import UserResource from '@/api/users';
 const userResource = new UserResource();
 
 export default {
-  components: { IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText },
+  components: { IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle },
   data() {
     return {
       schedules,
@@ -99,6 +112,13 @@ export default {
       if(detail.value == 'members' && this.members.length < 1) {
         const { data: members } = await userResource.list();
         this.members = members;
+      }
+    },
+    handleThemeToggleChange(event) {
+      if(event.detail.checked) {
+        document.body.setAttribute('color-theme', 'dark')
+      } else {
+        document.body.setAttribute('color-theme', 'light')
       }
     }
   } 
@@ -112,13 +132,11 @@ export default {
       .schedule-lecture {
         .schedule-lecture-title {
           font-size: 15px;
-          color: #ddd;
           margin-bottom: 0px;
           font-weight: bold;
         }
         .schedule-lecture-body {
           font-size: 12px;
-          color: #eee;
           margin-top: 3px;
         }
       }

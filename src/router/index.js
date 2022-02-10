@@ -9,7 +9,7 @@ import HomeIndex from "../views/Home/Index";
 import AbsentIndex from "../views/Absent/Index";
 
 // AUTH
-import AuthIndex from "../views/Auth/Index";
+import AuthLogin from "../views/Auth/Login";
 
 // OTHERS
 import OthersIndex from "../views/Others/Index";
@@ -25,39 +25,71 @@ import NoteIndex from '@/views/Note/Index';
 const routes = [
   {
     path: '/',
-    redirect: '/tabs/home'
+    redirect: '/login',
+    meta: {
+      auth: false
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: AuthLogin,
+    meta: {
+      auth: false
+    }
   },
   {
     path: '/tabs/',
     component: TabsPage,
+    meta: {
+      auth: true
+    },
     children: [
       {
         path: '',
-        redirect: '/tabs/home'
+        redirect: '/tabs/home',
+        meta: {
+          auth: true
+        }
       },
       {
         path: 'home',
         name: 'Home',
+        meta: {
+          auth: true
+        },
         component: () => HomeIndex
       },
       {
         path: 'note',
         name: 'Catatan',
+        meta: {
+          auth: true
+        },
         component: () => NoteIndex
       },
       {
         path: 'absent',
         name: 'Absensi',
+        meta: {
+          auth: true
+        },
         component: () => AbsentIndex
       },
       {
         path: 'others',
         name: 'Lainnya',
+        meta: {
+          auth: true
+        },
         component: () => OthersIndex
       },
       {
         path: 'todo',
         name: 'Tugas',
+        meta: {
+          auth: true
+        },
         component: () => TodoIndex
       },
     ]
@@ -68,5 +100,4 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
 export default router

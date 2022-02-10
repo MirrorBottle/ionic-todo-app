@@ -1,7 +1,7 @@
 <template>
   <ion-app>
     <ion-page>
-      <Header />
+      <Header v-if="$router.currentRoute.value.name !== 'login'" />
       <ion-router-outlet />
     </ion-page>
   </ion-app>
@@ -19,6 +19,12 @@ export default defineComponent({
     Header,
     IonPage,
     IonRouterOutlet
+  },
+  created() {
+    const user = localStorage.getItem('TODO_USER');
+    if(!user || user == 'undefined') {
+      this.$router.push({ name: 'login' })
+    }
   }
 });
 </script>

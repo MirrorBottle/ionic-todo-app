@@ -10,6 +10,8 @@ import { IonPage } from "@ionic/vue";
 import { user as getUser } from "@/utils/helper";
 import OnWork from "@/views/Placeholder/OnWork";
 export default {
+  name: 'HomeIndex',
+  displayName: 'HomeIndex',
   components: { IonPage, OnWork},
   computed: {
     user() {

@@ -58,7 +58,7 @@ const routes = [
         meta: {
           auth: true
         },
-        component: () => HomeIndex
+        component: HomeIndex
       },
       {
         path: 'note',
@@ -66,7 +66,7 @@ const routes = [
         meta: {
           auth: true
         },
-        component: () => NoteIndex
+        component: NoteIndex
       },
       {
         path: 'absent',
@@ -74,7 +74,7 @@ const routes = [
         meta: {
           auth: true
         },
-        component: () => AbsentIndex
+        component: AbsentIndex
       },
       {
         path: 'others',
@@ -82,7 +82,7 @@ const routes = [
         meta: {
           auth: true
         },
-        component: () => OthersIndex
+        component: OthersIndex
       },
       {
         path: 'todo',
@@ -90,7 +90,7 @@ const routes = [
         meta: {
           auth: true
         },
-        component: () => TodoIndex
+        component: TodoIndex
       },
     ]
   }

@@ -1,6 +1,7 @@
 {
   "appId": "todo.bayusetiawan.app",
-  "appName": "todo",
-  "webDir": "public",
+  "appName": "Todo Informatika A",
+  "webDir": "dist",
   "bundledWebRuntime": false
 }
+

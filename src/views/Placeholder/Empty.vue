@@ -2,7 +2,7 @@
   <ion-content>
     <div class="center">
       <img class="title-image" :src="empty" height="300" />
-      <h5 class="mb0">Kosong nih...</h5>
+      <h5 class="mb0">{{message}}</h5>
     </div>
   </ion-content>
 </template>
@@ -12,6 +12,12 @@ import empty from "@/assets/empty.svg";
 import { IonContent } from "@ionic/vue";
 export default {
   components: { IonContent },
+  props: {
+    message: {
+      type: String,
+      default: 'Kosong nih...'
+    }
+  },
   name: 'Empty',
   data() {
     return {

@@ -1,43 +1,51 @@
 <template>
   <ion-page>
-    <div class="reload-container">
-      <ion-button @click="doRefresh" size="small">
-        <ion-icon :icon="refreshOutline"></ion-icon>
-        Reload
-      </ion-button>
-    </div>
     <ion-content fullscreen :scroll-events="true">
-      <ion-list>
-        <ion-item-sliding v-for="note in notes" :key="note.id">
-          <ion-item button @click="handleItemClick(note)">
-            <ion-label>
-              <h2>{{note.title}}</h2>
-              <p>{{note.description}}</p>
-            </ion-label>
-          </ion-item>
-          <ion-item-options side="end">
-            <!-- <ion-item-option color="warning" @click="unread(item)">
-              <ion-icon slot="icon-only" :icon="pencilOutline"></ion-icon>
-            </ion-item-option> -->
-            <ion-item-option @click="handleDeleteClick(note)" color="danger">
-              <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
+      <ion-refresher slot="fixed" id="refresher">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+      <ion-list v-if="notes.length > 0">
+        <ion-item v-for="note in notes" button @click="handleItemClick(note)">
+          <ion-label>
+            <h2>{{note.title}}</h2>
+            <p>{{note.description}}</p>
+          </ion-label>
+        </ion-item>
       </ion-list>
+      <empty v-else message="Kosong gan..." />
     </ion-content>
-    
+
     <ion-loading
       :is-open="isLoading"
       message="Please wait..."
     />
+
+    <ion-modal 
+      :is-open="isModalOpen"
+      :breakpoints="[0.1, 0.5, 1]"
+      :initialBreakpoint="0.5"
+      @ionModalDidDismiss="isModalOpen = false"
+    >
+      <ion-header translucent>
+        <ion-toolbar>
+          <ion-title>{{selectedNote.title}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button @click="isModalOpen = false">Tutup</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content fullscreen>
+        <p>{{selectedNote.description}}</p>
+      </ion-content>
+    </ion-modal>
   </ion-page>
 </template>
 
 <script>
+import Empty from "@/views/Placeholder/Empty";
 import { copyText } from 'vue3-clipboard'
 import { pencilOutline, trashBinOutline, refreshOutline } from 'ionicons/icons';
-import { 
+import {
   IonPage, 
   IonLoading, 
   IonList,
@@ -48,6 +56,13 @@ import {
   IonLabel,
   IonButton,
   IonContent,
+  IonRefresher,
+  IonRefresherContent,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonTitle,
 } from '@ionic/vue';
 
 import NoteResource from '@/api/note';
@@ -56,6 +71,7 @@ const noteResource  = new NoteResource();
 export default {
   name: 'NoteIndex',
   components: {
+    Empty,
     IonPage, 
     IonLoading, 
     IonList,
@@ -66,12 +82,21 @@ export default {
     IonLabel,
     IonButton,
     IonContent,
+    IonRefresher,
+    IonRefresherContent,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonTitle,
   },
   data() {
     return {
       pencilOutline, trashBinOutline, refreshOutline,
       notes: [],
       isLoading: true,
+      isModalOpen: false,
+      selectedNote: {},
     }
   },
   async created() {
@@ -87,13 +112,8 @@ export default {
       this.isLoading = false;
     },
     handleItemClick(note) {
-      copyText(note.description, undefined, (error) => {
-        if (error) {
-          alert('Can not copy')
-        } else {
-          alert('Copied')
-        }
-      })
+      this.selectedNote = note;
+      this.isModalOpen = true;
     },
     handleDeleteClick(note) {
       this.isLoading = true;
@@ -113,9 +133,6 @@ export default {
 <style lang="scss" scoped>
 ion-content {
   overflow: hidden;
-}
-ion-list {
-  padding-bottom: 5rem;
 }
 .ion-page {
   justify-content: flex-start!important;

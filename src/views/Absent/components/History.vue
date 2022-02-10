@@ -10,8 +10,12 @@
     </ion-list>
 
     <ion-list v-if="absents.length > 0">
-      <template v-for="absent in absents" :key="absent.date">
-        <ion-list-header class="text-muted">{{ moment(absent.date).format('dddd, DD MMM YYYY') }}</ion-list-header>
+        <!-- <ion-list-header class="text-muted">{{ moment(absent.date).format('dddd, DD MMM YYYY') }}</ion-list-header> -->
+      <ion-item-group>
+        <template v-for="absent in absents" :key="absent.date">
+          <ion-item-divider>
+            <ion-label>{{ moment(absent.date).format('dddd, DD MMM YYYY') }}</ion-label>
+          </ion-item-divider>
           <ion-item v-for="data in absent.absents" :key="data.id">
             <ion-label>
               <h2>{{data.lecture_name}}</h2>
@@ -21,7 +25,8 @@
               {{data.created_time}}
             </ion-note>
           </ion-item>
-      </template>
+        </template>
+      </ion-item-group>
     </ion-list>
 
     <empty v-else />
@@ -37,13 +42,13 @@ import AbsentResource from '@/api/absent';
 import { user as getUser } from '@/utils/helper';
 import moment from 'moment';
 
-import { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime } from "@ionic/vue";
+import { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime, IonItemGroup } from "@ionic/vue";
 import Empty from "@/views/Placeholder/Empty";
 const absentResource = new AbsentResource();
 export default {
   components: { 
     Empty,
-    IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime },
+    IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime, IonItemGroup },
   data() {
     return {
       isLoading: false,

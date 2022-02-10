@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content fullscreen :scroll-events="true">
-      <ion-refresher slot="fixed" id="refresher">
+      <ion-refresher slot="fixed" id="refresher" @ionRefresher="doRefresh">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       <ion-list v-if="notes.length > 0">
@@ -106,6 +106,7 @@ export default {
   },
   methods: {
     async doRefresh() {
+      console.log('something');
       this.isLoading = true;
       const { data } = await noteResource.list();
       this.notes = data;

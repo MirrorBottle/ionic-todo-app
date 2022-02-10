@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 export const schedules = [
   {
-    id: 0,
+    id: 1,
     day: 'Senin',
     lectures: [
       {
@@ -14,7 +14,7 @@ export const schedules = [
     ]
   },
   {
-    id: 1,
+    id: 2,
     day: 'Selasa',
     lectures: [
       {
@@ -32,15 +32,9 @@ export const schedules = [
     ]
   },
   {
-    id: 2,
+    id: 3,
     day: 'Rabu',
     lectures: [
-      {
-        id: uuid(),
-        time: '07.30-09.00',
-        room: 'C302 (GEDUNG BARU DEKANAT TROPOCAL ENGENERING 1 LANTAI 3)',
-        lecture: 'PKN'
-      },
       {
         id: uuid(),
         time: '13.30-15.00',
@@ -56,7 +50,7 @@ export const schedules = [
     ]
   },
   {
-    id: 3,
+    id: 4,
     day: 'Kamis',
     lectures: [
       {
@@ -67,14 +61,20 @@ export const schedules = [
     ]
   },
   {
-    id: 4,
+    id: 5,
     day: 'Jumat',
     lectures: [
       {
         time: '07.30-09.00',
         room: '3B2 (LANTAI 1 RUANG KELAS BELAJAR GEDUNG 3 LAMA)',
         lecture: 'B. Indo'
-      }
+      },
+      {
+        id: uuid(),
+        time: '09.30-11.00',
+        room: 'C302 (GEDUNG BARU DEKANAT TROPOCAL ENGENERING 1 LANTAI 3)',
+        lecture: 'PKN'
+      },
     ]
   },
 ]

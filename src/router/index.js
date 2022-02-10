@@ -22,6 +22,13 @@ import TodoDetail from '@/views/Todo/Detail';
 // NOTE
 import NoteIndex from '@/views/Note/Index';
 
+// ADMIN
+import AdminAbsentIndex from '@/views/Admin/Absent/Index';
+import AdminTodoIndex from '@/views/Admin/Todo/Index';
+import AdminTodoCreate from '@/views/Admin/Todo/Create';
+import AdminNoteIndex from '@/views/Admin/Note/Index';
+import AdminNoteCreate from '@/views/Admin/Note/Create';
+
 const routes = [
   {
     path: '/',
@@ -37,6 +44,36 @@ const routes = [
     meta: {
       auth: false
     }
+  },
+  {
+    path: '/admin/absent',
+    name: 'Admin - Absensi',
+    component: AdminAbsentIndex,
+    meta: { auth: false }
+  },
+  {
+    path: '/admin/todo',
+    name: 'Admin - Tugas',
+    component: AdminTodoIndex,
+    meta: { auth: false }
+  },
+  {
+    path: '/admin/todo/create',
+    name: 'Admin - Tambah Tugas',
+    component: AdminTodoIndex,
+    meta: { auth: false }
+  },
+  {
+    path: '/admin/note',
+    name: 'Admin - Catatan',
+    component: AdminNoteIndex,
+    meta: { auth: false }
+  },
+  {
+    path: '/admin/note/create',
+    name: 'Admin - Tambah Catatan',
+    component: AdminNoteIndex,
+    meta: { auth: false }
   },
   {
     path: '/tabs/',

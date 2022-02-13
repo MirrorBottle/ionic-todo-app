@@ -59,22 +59,21 @@ export function getNotifications() {
 
 export async function setNotifications() {
   const lectures = schedules.map(schedule => schedule.lectures).flatMap(lectures => lectures);
-  const notifications = lectures.map(lecture => {
+  const notifications = lectures.map((lecture, index) => {
     const time = lecture.time.split("-")[0]
     const parsed = moment(time, "HH.mm").subtract(15, "minutes").format("HH.mm").split(".");
-    const hour = Number(time[0]);
-    const minute = Number(time[1])
+    const hour = Number(parsed[0]);
+    const minute = Number(parsed[1])
     return {
       title: `${lecture.lecture}!`,
       body: `${lecture.lecture} akan dimulai 15 menit lagi!`,
-      id: lecture.id,
+      id: index + 1,
       actionTypeId: "",
       extra: null,
       repeats: true,
       every: 'week',
       weekday: lecture.parent_id + 1,
-      hour,
-      minute
+      on: { hour, minute }
     }
   })
   await LocalNotifications.schedule({ notifications });

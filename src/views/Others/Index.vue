@@ -1,9 +1,14 @@
 <template>
   <ion-page>
     <ion-content fullscreen :scroll-events="true">
+      <div class="header">
+        <img :src="logo" alt="Ionic logo">
+      </div>
+
       <ion-accordion-group @ionChange="handleAccordionChange">
         <ion-accordion value="schedules">
           <ion-item slot="header">
+            <ion-icon :icon="calendarClearSharp" class="mr1"></ion-icon>
             <ion-label>Jadwal</ion-label>
           </ion-item>
 
@@ -24,6 +29,7 @@
 
         <ion-accordion value="members">
           <ion-item slot="header">
+            <ion-icon :icon="peopleCircleSharp" class="mr1"></ion-icon>
             <ion-label>Anggota Kelas</ion-label>
           </ion-item>
 
@@ -42,6 +48,7 @@
 
         <ion-accordion value="lecturers">
           <ion-item slot="header">
+            <ion-icon :icon="bookSharp" class="mr1"></ion-icon>
             <ion-label>Dosen</ion-label>
           </ion-item>
 
@@ -62,6 +69,7 @@
 
         <ion-accordion value="theme">
           <ion-item slot="header">
+            <ion-icon :icon="settingsSharp" class="mr1"></ion-icon>
             <ion-label>Pengaturan</ion-label>
           </ion-item>
 
@@ -79,14 +87,54 @@
             
           </ion-list>
         </ion-accordion>
-      </ion-accordion-group>
 
+        <ion-accordion value="help">
+          <ion-item slot="header">
+            <ion-icon :icon="helpCircleSharp" class="mr1"></ion-icon>
+            <ion-label>Bantuan</ion-label>
+          </ion-item>
+          
+          <ion-list slot="content">
+            <ion-item>
+              <p>Hubungi orang dengan NIM <b>2109106001</b> dan <b>2109106024</b>, seharusnya kamu kenal dengan mereka.</p>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+
+        <ion-accordion value="about">
+          <ion-item slot="header">
+            <ion-icon :icon="informationCircleSharp" class="mr1"></ion-icon>
+            <ion-label>Tentang</ion-label>
+          </ion-item>
+          <ion-list slot="content">
+            <ion-item>
+              <p>Made with 💖 by <b>Bayu Setiawan</b> and <b>You</b></p>
+            </ion-item>
+            <ion-item>
+              <ion-label><b>Email</b> : setiawanbayu66152@gmail.com</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label><b>Github</b> : <a href="#" onclick="window.open('https://github.com/MirrorBottle', '_system', 'location=yes'); return false;">MirrorBottle</a></ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-accordion>
+
+      </ion-accordion-group>
       <ion-button expand="block" color="danger" class="mt2" @click="handleLogout">Logout</ion-button>
     </ion-content>
   </ion-page>
 </template>
 
 <script>
+import logo from "@/assets/logo.jpg"
+import {
+  settingsSharp,
+  peopleCircleSharp,
+  bookSharp,
+  calendarClearSharp,
+  informationCircleSharp,
+  helpCircleSharp,
+} from "ionicons/icons";
 import { alertController, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption } from '@ionic/vue';
 import { schedules, lecturers, settings } from '@/utils/data';
 import { getSettings, setSettings, clearNotifications, setNotifications } from '@/utils/helper';
@@ -100,6 +148,13 @@ export default {
   components: { alertController, Skeleton, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption },
   data() {
     return {
+      logo,
+      settingsSharp,
+      peopleCircleSharp,
+      bookSharp,
+      calendarClearSharp,
+      informationCircleSharp,
+      helpCircleSharp,
       schedules,
       lecturers,
       members: [],
@@ -164,7 +219,17 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .header {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 10rem;
+    }
+  }
   .schedule {
     .schedule-lectures {
       margin-top: 10px;

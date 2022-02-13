@@ -30,6 +30,8 @@
 
 <script>
 import logo from "@/assets/logo.jpg"
+import { settings } from "@/utils/data";
+import { setSettings } from "@/utils/helper";
 import { alertController, IonInput, IonListHeader, IonList, IonLabel, IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonLoading } from "@ionic/vue";
 import AuthResource from "@/api/auth";
 
@@ -57,6 +59,8 @@ export default {
       authResource
         .login(this.form)
         .then(({ user }) => {
+          setSettings(settings);
+          document.body.setAttribute('color-theme', settings.theme);
           localStorage.setItem('TODO_USER', JSON.stringify(user))
           this.$router.push('/tabs/home');
         })

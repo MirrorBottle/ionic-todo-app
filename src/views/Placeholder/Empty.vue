@@ -1,5 +1,5 @@
 <template>
-  <ion-content>
+  <ion-content style="min-height: 400px;">
     <div class="center">
       <img class="title-image" :src="empty" height="300" />
       <h5 class="mb0">{{message}}</h5>

@@ -78,3 +78,22 @@ export const schedules = [
     ]
   },
 ]
+
+export const lecturers = [
+	{
+		lecture_name : 'Algoritma dan Pemrograman Lanjut',
+    lecturers: [
+      {
+        name: 'Awang Harsa K, M.Kom'
+      },
+      {
+        name: 'Ir. Novianti Puspitasari, M.Eng'
+      }
+    ]
+	},
+]
+
+export const settings = {
+  theme: 'light',
+  notification: 'off'
+}

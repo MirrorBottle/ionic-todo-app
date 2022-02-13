@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-refresher slot="fixed" id="refresher" @ionRefresh="doRefresh($event)" pull-factor="0.5" pull-min="100" pull-max="200">
+      <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)" pull-factor="0.5" pull-min="100" pull-max="200">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       <ion-list>

@@ -3,7 +3,7 @@
     <ion-page>
       <Header v-if="$router.currentRoute.value.name !== 'login'" />
       <ion-router-outlet />
-      <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab v-if="$router.currentRoute.value.name !== 'login'" horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button>
           <ion-icon :icon="appsOutline"></ion-icon>
         </ion-fab-button>

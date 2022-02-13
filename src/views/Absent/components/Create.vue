@@ -31,7 +31,7 @@
 import moment from 'moment';
 import LectureResource from '@/api/lecture';
 import AbsentResource from '@/api/absent';
-import { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime } from "@ionic/vue";
+import { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonSelectOption, IonContent, IonLoading, IonDatetime } from "@ionic/vue";
 import { schedules } from "@/utils/data";
 import { user, toast, getLectures, setLectures } from "@/utils/helper";
 
@@ -39,7 +39,7 @@ const absentResource = new AbsentResource();
 const lectureResource = new LectureResource();
 
 export default {
-  components: { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime },
+  components: { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonSelectOption, IonContent, IonLoading, IonDatetime },
   data() {
     return {
       form: {
@@ -76,7 +76,10 @@ export default {
       absentResource
         .store(form)
         .then(() => toast('Berhasil menambah absensi', 'success'))
-        .catch((err) => toast(err.response, 'error'))
+        .catch((err) => {
+          console.log(err.response, err.response.message);
+          toast(err.response.message, 'danger')
+        })
         .finally(() => this.isLoading = false)
     }
   }

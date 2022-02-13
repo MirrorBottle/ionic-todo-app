@@ -32,3 +32,20 @@ export function getLectures() {
 export function setLectures(data) {
   localStorage.setItem('TODO_LECTURES', JSON.stringify(data));
 }
+
+export function getSettings(key) {
+  const settings = localStorage.getItem('TODO_SETTINGS');
+  if(settings && settings !== undefined) {
+    const data = JSON.parse(settings);
+    return key ? data[key] : data;
+  }
+  return {};
+}
+
+export function setSettings(data) {
+  localStorage.setItem('TODO_SETTINGS', JSON.stringify(data));
+}
+
+export function setNotifications() {
+
+}

@@ -9,32 +9,29 @@
       </ion-item>
     </ion-list>
 
-    <ion-list v-if="absents.length > 0">
-        <!-- <ion-list-header class="text-muted">{{ moment(absent.date).format('dddd, DD MMM YYYY') }}</ion-list-header> -->
-      <ion-item-group>
-        <template v-for="absent in absents" :key="absent.date">
-          <ion-item-divider>
-            <ion-label>{{ moment(absent.date).format('dddd, DD MMM YYYY') }}</ion-label>
-          </ion-item-divider>
-          <ion-item v-for="data in absent.absents" :key="data.id">
-            <ion-label>
-              <h2>{{data.lecture_name}}</h2>
-              <h3>Pertemuan : {{data.meeting}}</h3>
-            </ion-label>
-            <ion-note slot="end">
-              {{data.created_time}}
-            </ion-note>
-          </ion-item>
-        </template>
-      </ion-item-group>
-    </ion-list>
-
-    <empty v-else />
+    <template v-if="!isLoading">
+      <ion-list v-if="absents.length > 0">
+        <ion-item-group>
+          <template v-for="absent in absents" :key="absent.date">
+            <ion-item-divider>
+              <ion-label>{{ moment(absent.date).format('dddd, DD MMM YYYY') }}</ion-label>
+            </ion-item-divider>
+            <ion-item v-for="data in absent.absents" :key="data.id">
+              <ion-label>
+                <h2>{{data.lecture_name}}</h2>
+                <h3>Pertemuan : {{data.meeting}}</h3>
+              </ion-label>
+              <ion-note slot="end">
+                {{data.created_time}}
+              </ion-note>
+            </ion-item>
+          </template>
+        </ion-item-group>
+      </ion-list>
+      <empty v-else />
+    </template>
+    <skeleton v-else :iterations="5" />
   </ion-content>
-  <ion-loading
-    :is-open="isLoading"
-    message="Please wait..."
-  />
 </template>
 
 <script>
@@ -42,13 +39,16 @@ import AbsentResource from '@/api/absent';
 import { user as getUser } from '@/utils/helper';
 import moment from 'moment';
 
-import { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime, IonItemGroup } from "@ionic/vue";
+import { IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonDatetime, IonItemGroup, IonSelectOption, IonItemDivider, IonNote } from "@ionic/vue";
 import Empty from "@/views/Placeholder/Empty";
+import Skeleton from "@/views/Placeholder/Skeleton";
+
 const absentResource = new AbsentResource();
 export default {
   components: { 
     Empty,
-    IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonLoading, IonDatetime, IonItemGroup },
+    Skeleton,
+    IonList, IonListHeader, IonItem, IonLabel, IonInput, IonButton, IonSelect, IonContent, IonDatetime, IonItemGroup, IonSelectOption, IonItemDivider, IonNote },
   data() {
     return {
       isLoading: false,
@@ -79,6 +79,7 @@ export default {
       const { data: absents } = await absentResource.list(params)
       const dates = [...new Set(absents.map(absent => absent.created_at))]
       this.absents = dates.map(date => ({ date, absents: absents.filter(absent => absent.created_at == date)}))
+      console.log(this.absents.length);
       this.isLoading = false;
     },
     async init() {

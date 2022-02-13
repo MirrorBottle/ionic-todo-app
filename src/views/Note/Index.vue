@@ -1,24 +1,22 @@
 <template>
   <ion-page>
     <ion-content fullscreen :scroll-events="true">
-      <ion-refresher slot="fixed" id="refresher" @ionRefresher="doRefresh">
+      <ion-refresher slot="fixed" @ionRefresh="doRefresh($event)" pull-factor="0.5" pull-min="100" pull-max="200">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <ion-list v-if="notes.length > 0">
-        <ion-item v-for="note in notes" button @click="handleItemClick(note)">
-          <ion-label>
-            <h2>{{note.title}}</h2>
-            <p>{{note.description}}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-      <empty v-else message="Kosong gan..." />
+      <template v-if="!isLoading">
+        <ion-list v-if="notes.length > 0">
+          <ion-item v-for="note in notes" button @click="handleItemClick(note)">
+            <ion-label>
+              <h2>{{note.title}}</h2>
+              <p>{{note.description}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <empty v-else message="Kosong gan..." />
+      </template>
+      <skeleton v-else :iterations="6" />
     </ion-content>
-
-    <ion-loading
-      :is-open="isLoading"
-      message="Please wait..."
-    />
 
     <ion-modal 
       :is-open="isModalOpen"
@@ -43,6 +41,7 @@
 
 <script>
 import Empty from "@/views/Placeholder/Empty";
+import Skeleton from "@/views/Placeholder/Skeleton";
 import { copyText } from 'vue3-clipboard'
 import { pencilOutline, trashBinOutline, refreshOutline } from 'ionicons/icons';
 import {
@@ -72,6 +71,7 @@ export default {
   name: 'NoteIndex',
   components: {
     Empty,
+    Skeleton,
     IonPage, 
     IonLoading, 
     IonList,
@@ -105,12 +105,10 @@ export default {
     this.isLoading = false;
   },
   methods: {
-    async doRefresh() {
-      console.log('something');
-      this.isLoading = true;
+    async doRefresh(event) {
       const { data } = await noteResource.list();
       this.notes = data;
-      this.isLoading = false;
+      event.target.complete()
     },
     handleItemClick(note) {
       this.selectedNote = note;

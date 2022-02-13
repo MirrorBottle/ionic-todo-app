@@ -2,6 +2,7 @@
 import { toastController } from '@ionic/vue';
 import { LocalNotifications } from "@capacitor/local-notifications"
 import { schedules } from "./data";
+import moment from "moment";
 // UX
 export async function toast(message, color = 'primary') {
   const toast = await toastController
@@ -59,7 +60,8 @@ export function getNotifications() {
 export async function setNotifications() {
   const lectures = schedules.map(schedule => schedule.lectures).flatMap(lectures => lectures);
   const notifications = lectures.map(lecture => {
-    const time = lecture.time.split("-")[0].split(".")
+    const time = lecture.time.split("-")[0]
+    const parsed = moment(time, "HH.mm").subtract(15, "minutes").format("HH.mm").split(".");
     const hour = Number(time[0]);
     const minute = Number(time[1])
     return {

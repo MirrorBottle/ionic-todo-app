@@ -88,8 +88,8 @@
 
 <script>
 import { alertController, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption } from '@ionic/vue';
-import { schedules, lecturers } from '@/utils/data';
-import { getSettings, setSettings } from '@/utils/helper';
+import { schedules, lecturers, settings } from '@/utils/data';
+import { getSettings, setSettings, clearNotifications, setNotifications } from '@/utils/helper';
 import Skeleton from "@/views/Placeholder/Skeleton";
 
 import UserResource from '@/api/users';
@@ -123,6 +123,11 @@ export default {
       }
     },
     handleNotificationChange(event) {
+      if(event.detail.checked) {
+        setNotifications();
+      } else {
+        clearNotifications();
+      }
       setSettings(this.settings);
     },
     handleThemeChange() {
@@ -145,6 +150,8 @@ export default {
               text: 'Ya',
               id: 'confirm-button',
               handler: () => {
+                setSettings(settings)
+                clearNotifications();
                 localStorage.removeItem("TODO_USER");
                 this.$router.push('/login');
               },

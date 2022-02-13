@@ -3,7 +3,7 @@
     <ion-content>
       <h3 class="mb2"><b>Hi</b>, {{user.name}}</h3>
 
-      <ion-card class="mx0 mb2" color="danger">
+      <ion-card v-if="settings.set_notification == 'not_yet'" class="mx0 mb2" color="danger">
         <ion-card-header>
           <ion-card-subtitle>Pengaturan</ion-card-subtitle>
           <ion-card-title>Aktifkan Notifikasi</ion-card-title>
@@ -12,7 +12,7 @@
           <p>Jika ingin mendapatkan notifikasi 15 menit sebelum jadwal perkuliahan dimulai, aktifkan pengaturan ini.</p>
           <div class="flex mt2 justify-end">
             <ion-button color="dark" @click="handleNotificationActiveClick">Aktifkan</ion-button>
-            <ion-button color="light" fill="clear">Tidak</ion-button>
+            <ion-button color="light" fill="clear" @click="handleNotificationNonactiveClick">Tidak</ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -57,14 +57,18 @@
 
 <script>
 import { IonContent, IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonButton } from "@ionic/vue";
-import { user as getUser } from "@/utils/helper";
+import { user as getUser, setNotifications, getSettings, setSettings } from "@/utils/helper";
 import { schedules } from "@/utils/data";
-import { LocalNotifications } from "@capacitor/local-notifications"
 import moment from "moment";
 export default {
   name: 'HomeIndex',
   displayName: 'HomeIndex',
   components: { IonContent, IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonButton },
+  data() {
+    return {
+      settings: getSettings()
+    }
+  },
   computed: {
     user() {
       const user = getUser();
@@ -80,17 +84,12 @@ export default {
   },
   methods: {
     async handleNotificationActiveClick() {
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            title: "Alpro Lanjutan!",
-            body: "Alpro Lanjutan (Dosen 1) akan dimulai 15 menit lagi!",
-            id: 1,
-            actionTypeId: "",
-            extra: null
-          }
-        ]
-      });
+      setSettings({...this.settings, notification: 'on', set_notification: 'done'})
+      setNotifications();
+    },
+    handleNotificationNonactiveClick() {
+      setSettings({...this.settings, notification: 'off', set_notification: 'done'})
+      this.settings = getSettings();
     }
   }
 }

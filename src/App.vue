@@ -43,6 +43,7 @@ import {
   homeOutline, 
   appsOutline
 } from 'ionicons/icons';
+import { getSettings } from "@/utils/helper";
 import { defineComponent } from 'vue';
 import Header from '@/components/Header';
 
@@ -68,10 +69,12 @@ export default defineComponent({
     }
   },
   created() {
+    const settings = getSettings();
     const user = localStorage.getItem('TODO_USER');
     if(!user || user == 'undefined') {
       this.$router.push({ name: 'login' })
     }
+    document.body.setAttribute('color-theme', settings.theme)
   }
 });
 </script>

@@ -135,7 +135,7 @@ import {
   informationCircleSharp,
   helpCircleSharp,
 } from "ionicons/icons";
-import { alertController, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption } from '@ionic/vue';
+import { alertController, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption, IonIcon } from '@ionic/vue';
 import { schedules, lecturers, settings } from '@/utils/data';
 import { getSettings, setSettings, clearNotifications, setNotifications } from '@/utils/helper';
 import Skeleton from "@/views/Placeholder/Skeleton";
@@ -145,7 +145,7 @@ import UserResource from '@/api/users';
 const userResource = new UserResource();
 
 export default {
-  components: { alertController, Skeleton, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption },
+  components: { alertController, Skeleton, IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonPage, IonContent, IonInput, IonButton, IonList, IonSkeletonText, IonToggle, IonItemGroup, IonItemDivider, IonSelect, IonSelectOption, IonIcon },
   data() {
     return {
       logo,

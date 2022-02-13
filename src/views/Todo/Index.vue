@@ -1,56 +1,24 @@
 <template>
   <ion-page>
-    <div class="reload-container">
-      <ion-button @click="doRefresh" size="small">
-        <ion-icon :icon="refreshOutline"></ion-icon>
-        Reload
-      </ion-button>
-    </div>
-    <template v-if="todos.length > 0">
-      <ion-content fullscreen :scroll-events="true">
-        <ion-list>
-          <ion-item-sliding v-for="todo in todos" :key="todo.id">
-            <ion-item button @click="handleItemClick(todo)">
-              <ion-label>
-                <h2>{{todo.title}}</h2>
-                <p>{{todo.lesson_format}}</p>
-                <p>{{todo.description}}</p>
-              </ion-label>
-              <ion-note slot="end">
-                {{todo.deadline}}
-              </ion-note>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="primary" @click="handleArchiveClick(todo)">
-                <ion-icon slot="icon-only" :icon="folderOutline"></ion-icon>
-              </ion-item-option>
-              <ion-item-option color="danger" @click="handleDeleteClick(todo)">
-                <ion-icon slot="icon-only" :icon="trashBinOutline"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-content>
-    </template>
-    <template v-else>
-      <div class="empty-state">
-        <ion-icon size="large" :icon="happyOutline"></ion-icon>
-        <h2>Cie... gak ada tugas nih</h2>
-      </div>
-    </template>
-    
-    <ion-loading
-      :is-open="isLoading"
-      message="Please wait..."
-    />
+    <ion-segment v-model="segment" class="pt1">
+      <ion-segment-button value="all">
+        <ion-label>Semua</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="done">
+        <ion-label>Selesai</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="archive">
+        <ion-label>Arsip</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-page>
 </template>
 
 <script>
-import { folderOutline, trashBinOutline, refreshOutline, happyOutline } from 'ionicons/icons';
+import Empty from "@/views/Placeholder/Empty";
+import Skeleton from "@/views/Placeholder/Skeleton";
 import { 
   IonPage, 
-  IonLoading, 
   IonList,
   IonItem,
   IonItemSliding,
@@ -60,16 +28,25 @@ import {
   IonLabel,
   IonButton,
   IonContent,
+  IonSegment,
+  IonSegmentButton,
+  IonSearchbar,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonTitle
 } from '@ionic/vue';
 
 import TodoResource from '@/api/todo';
-
 const todoResource  = new TodoResource();
+
 export default {
   name: 'TodoIndex',
   components: {
-    IonPage, 
-    IonLoading, 
+    Empty,
+    Skeleton,
+    IonPage,  
     IonList,
     IonItem,
     IonItemSliding,
@@ -79,12 +56,22 @@ export default {
     IonLabel,
     IonButton,
     IonContent,
+    IonSegment,
+    IonSegmentButton,
+    IonSearchbar,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonTitle
   },
   data() {
     return {
-      folderOutline, trashBinOutline, refreshOutline, happyOutline,
       todos: [],
+      todo: {},
+      segment: 'all',
       isLoading: true,
+      isModalOpen: false,
     }
   },
   async created() {
@@ -100,20 +87,9 @@ export default {
       this.isLoading = false;
     },
     handleItemClick(todo) {
-      this.$router.push({ name: 'To Do Detail', params: { id: todo.id } })
+      this.todo = todo;
+      this.isModalOpen = true;
     },
-    handleDeleteClick(todo) {
-      this.isLoading = true;
-      todoResource
-        .destroy(todo.id)
-        .finally(() => this.doRefresh())
-    },
-    handleArchiveClick(todo) {
-      this.isLoading = true;
-      todoResource
-        .update(todo.id, { is_archive: 1 })
-        .finally(() => this.doRefresh())
-    }
   }
 }
 </script>

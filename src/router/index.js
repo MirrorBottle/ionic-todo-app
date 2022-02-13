@@ -16,8 +16,6 @@ import OthersIndex from "../views/Others/Index";
 
 // TODO
 import TodoIndex from '@/views/Todo/Index';
-import TodoArchive from '@/views/Todo/Archive';
-import TodoDetail from '@/views/Todo/Detail';
 
 // NOTE
 import NoteIndex from '@/views/Note/Index';
